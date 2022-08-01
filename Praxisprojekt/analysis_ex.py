@@ -18,7 +18,8 @@ class Analyser:
         # your code here #
 
     def visualize_sales_per_countries(self):
-        # your code here #
+        von = "1.01.2014"
+        bis = "31.12.2020"
         pass
 
     def visualize_sales_per_year(self):

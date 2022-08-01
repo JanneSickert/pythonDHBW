@@ -23,7 +23,22 @@ class ETL:
         self.raw_data_tables["sales_codes"] = self.raw_data_tables["sales_codes"].drop(columns=['Unnamed: 0'])
         self.raw_data_tables["vehicle_hash"] = self.raw_data_tables["vehicle_hash"].drop(
             columns=['Unnamed: 0', 'record_source', 'load_ts'])
-        # your code here #
+        self.gesammt_tabelle = {
+            "h_vehicle_hash": [],
+            "fin": [],
+            "production_date": [],
+            "country": [],
+            "sales_code_array": []}
+        for e in self.raw_data_tables["sales_codes"]:
+            self.gesammt_tabelle["h_vehicle_hash"].append(str(e["h_vehicle_hash"]))
+            self.gesammt_tabelle["production_date"].append(str(e["production_date"]))
+            self.gesammt_tabelle["country"].append(str(e["country"]))
+            self.gesammt_tabelle["sales_code_array"].append(str(e["sales_code_array"]))
+            for v in self.raw_data_tables["vehicle_hash"]:
+                if v["h_vehicle_hash"] == e["h_vehicle_hash"]:
+                    self.gesammt_tabelle["fin"].append(str(v["fin"]))
+        print(self.gesammt_tabelle)
+        
 
     def enhance_raw_data(self):
         self.handle_nans()

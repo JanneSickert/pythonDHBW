@@ -21,24 +21,19 @@ class ETL:
 
     def create_final_table(self):
         self.raw_data_tables["sales_codes"] = self.raw_data_tables["sales_codes"].drop(columns=['Unnamed: 0'])
-        self.raw_data_tables["vehicle_hash"] = self.raw_data_tables["vehicle_hash"].drop(
-            columns=['Unnamed: 0', 'record_source', 'load_ts'])
-        self.gesammt_tabelle = {
-            "h_vehicle_hash": [],
-            "fin": [],
-            "production_date": [],
-            "country": [],
-            "sales_code_array": []}
-        for e in self.raw_data_tables["sales_codes"]:
-            self.gesammt_tabelle["h_vehicle_hash"].append(str(e["h_vehicle_hash"]))
-            self.gesammt_tabelle["production_date"].append(str(e["production_date"]))
-            self.gesammt_tabelle["country"].append(str(e["country"]))
-            self.gesammt_tabelle["sales_code_array"].append(str(e["sales_code_array"]))
-            for v in self.raw_data_tables["vehicle_hash"]:
-                if v["h_vehicle_hash"] == e["h_vehicle_hash"]:
-                    self.gesammt_tabelle["fin"].append(str(v["fin"]))
-        print(self.gesammt_tabelle)
-        
+        self.raw_data_tables["vehicle_hash"] = self.raw_data_tables["vehicle_hash"].drop(columns=['Unnamed: 0', 'record_source', 'load_ts'])
+        self.raw_data_tables["sales_codes"].sort_values(['h_vehicle_hash'], ascending = [True])
+        self.raw_data_tables["vehicle_hash"].sort_values(['h_vehicle_hash'], ascending = [False])
+        self.final_table = pd.DataFrame(
+            {
+                "h_vehicle_hash": self.raw_data_tables["sales_codes"]["h_vehicle_hash"],
+                "production_date": self.raw_data_tables["sales_codes"]["production_date"],
+                "country": self.raw_data_tables["sales_codes"]["country"],
+                "sales_code_array": self.raw_data_tables["sales_codes"]["sales_code_array"],
+                "fin": self.raw_data_tables["vehicle_hash"]["fin"]
+            }
+        )
+        print(self.final_table)
 
     def enhance_raw_data(self):
         self.handle_nans()

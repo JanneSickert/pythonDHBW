@@ -198,3 +198,4 @@ class Analyser:
             print(self.final_table["country"][i])
             i = i + 1
         print("exporte nach neuseeland", exporte_nach_neuseeland)
+        print("-------------------------------", "ende der Analyse")

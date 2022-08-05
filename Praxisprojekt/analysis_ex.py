@@ -9,9 +9,27 @@ class Analyser:
         self.final_table = table
         self.filter_for_years()
 
+
     def run(self):
         self.visualize_sales_per_countries()
         self.visualize_sales_per_year()
+        self.optional()
+
+
+    def optional(self):
+        print("fin des ertverkauften farzeugs")
+        first_date = datetime.datetime(3000, 12, 31, 0, 0)
+        index = 0
+        for i in range(len(self.final_table["production_date"])):
+            d = self.final_table["production_date"][i]
+            try:
+                if d < first_date:
+                    first_date = d
+                    index = i
+            except Exception:
+                pass
+        fin = self.final_table["fin"][index]
+        print(str(fin))
 
     def filter_for_years(self):
         df = self.final_table

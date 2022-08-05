@@ -102,6 +102,13 @@ class Analyser:
         mit den in der Aufgabenstellung beschribenden
         Motoren verkauft.
         """
+        aufgabe3 = """
+        Was ist die FIN von Fahrzeugen mit OM 936
+        Motor die nach Neuseland verkauft wurden,
+        und das im selben Zeitinterval wie bei
+        Aufgabe 2.
+        """
+        # ------------------------
         # Aufgabe 1
         print("fin des ertverkauften farzeugs")
         first_date = datetime.datetime(3000, 12, 31, 0, 0)
@@ -182,3 +189,12 @@ class Analyser:
             i = i + 1
         print(aufgabe2)
         print(counter)
+        # ------------------------
+        # Aufgabe 3
+        print(aufgabe3)
+        arr = self.final_table.query("country == \"Neuseeland\"")
+        i = 0
+        while i < len(arr["sales_code_array"]):
+            if arr["sales_code_array"][i].count("OM 936") >= 1:
+                print(arr["fin"])
+            i = i + 1

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
+import numpy as np
 
 class Analyser:
     def __init__(self, table, figure_save_path):
@@ -18,9 +19,16 @@ class Analyser:
         # your code here #
 
     def visualize_sales_per_countries(self):
-        # In welchen top 3 Laendern wurden
-        # die meisten Farzeuge in diesen
-        # Zeitraeumen verkauft.
+        aufgabe = """
+        In welchen top 3 Laendern wurden
+        die meisten Farzeuge in diesen
+        Zeitraeumen verkauft.
+        """
+        aufgabe2 = """
+        In welchen Jahren 
+        wurden die meisten Autos 
+        verkauft
+        """
         von = datetime.datetime(2014,  1,  1, 0, 0)
         bis = datetime.datetime(2020, 12, 31, 0, 0)
         key = ["country", "production_date", "verkaufte_autos_in_zeitspanne"]
@@ -33,11 +41,58 @@ class Analyser:
                 print(
                     "fail at: ", i, 
                     "type: ", type(self.final_table[key[1]][i]), 
-                    "value: ", str(self.final_table[key[1]][i]))
+                    "value: ", str(self.final_table[key[1]][i])
+                )
+        score = {
+            "name": [], 
+            "sells": []
+        }
+        score_date = {
+            "datum": [], 
+            "times": []
+        }
         for index_of_land_in_time_range in index_list:
-            self.final_table[key[2]][index_of_land_in_time_range] = self.final_table[key[2]][index_of_land_in_time_range] + 1
-        print(self.final_table)
-            
+            if self.final_table[key[1]][index_of_land_in_time_range].year in score_date["datum"]:
+                ind = score_date["datum"].index(self.final_table[key[1]][index_of_land_in_time_range].year)
+                score_date["times"][ind] = score_date["times"][ind] + 1
+            else:
+                score_date["datum"].append(self.final_table[key[1]][index_of_land_in_time_range].year)
+                score_date["times"].append(1)
+            country_name = self.final_table[key[0]][index_of_land_in_time_range]
+            if country_name in score["name"]:
+                ind = score["name"].index(country_name)
+                score["sells"][ind] = score["sells"][ind] + 1
+            else:
+                score["name"].append(country_name)
+                score["sells"].append(1)
+        height_score = {
+            "name": [], 
+            "sells": []
+        }
+        height_score_date = {
+            "datum": [], 
+            "times": []
+        }
+        # for i in range(len(score["name"])):
+        #    print(score["name"][i], score["sells"][i])
+        # Auto Exportweldmeister
+        for i in range(3):
+            ind = score["sells"].index(max(score["sells"]))
+            height_score["name"].append(score["name"][ind])
+            height_score["sells"].append(score["sells"][ind])
+            score["sells"][ind] = 0
+        print(aufgabe)
+        for i in range(len(height_score["name"])):
+            print(height_score["name"][i], height_score["sells"][i])
+        # Beste Zeiten zum verkaufen
+        for i in range(3):
+            ind = score_date["times"].index(max(score_date["times"]))
+            height_score_date["datum"].append(score_date["datum"][ind])
+            height_score_date["times"].append(score_date["times"][ind])
+            score_date["times"][ind] = 0
+        print(aufgabe2)
+        for i in range(len(height_score["name"])):
+            print(height_score_date["datum"][i], height_score_date["times"][i])
 
     def visualize_sales_per_year(self):
         # your code here #

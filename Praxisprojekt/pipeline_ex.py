@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 class ETL:
-    final_table = pd.DataFrame()
+    final_table, engine_table = pd.DataFrame(), pd.DataFrame()
 
     def __init__(self, data_specs=None):
         self.importer = DataLoader(data_specs)
@@ -13,7 +13,7 @@ class ETL:
         self.enhance_raw_data()
         self.create_final_table()
         self.save_final_table()
-        return self.final_table
+        return self.final_table, self.engine_table
 
     def save_final_table(self):
         database_path = self.importer.database_config["database_path"]
@@ -21,6 +21,7 @@ class ETL:
 
     def create_final_table(self):
         length = self.raw_data_tables["sales_codes"]["h_vehicle_hash"].size
+        self.engine_table = self.raw_data_tables["engines"]
         self.raw_data_tables["sales_codes"] = self.raw_data_tables["sales_codes"].drop(columns=['Unnamed: 0'])
         self.raw_data_tables["vehicle_hash"] = self.raw_data_tables["vehicle_hash"].drop(columns=['Unnamed: 0', 'record_source', 'load_ts'])
         self.raw_data_tables["sales_codes"].sort_values(['h_vehicle_hash'], ascending = [True])

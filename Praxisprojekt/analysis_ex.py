@@ -4,37 +4,15 @@ import datetime
 import numpy as np
 
 class Analyser:
-    def __init__(self, table, figure_save_path):
+    def __init__(self, table, engine_table, figure_save_path):
         self.figure_save_path = figure_save_path
         self.final_table = table
-        self.filter_for_years()
+        self.engine_table = engine_table
 
 
     def run(self):
         self.visualize_sales_per_countries()
-        self.visualize_sales_per_year()
         self.optional()
-
-
-    def optional(self):
-        print("fin des ertverkauften farzeugs")
-        first_date = datetime.datetime(3000, 12, 31, 0, 0)
-        index = 0
-        for i in range(len(self.final_table["production_date"])):
-            d = self.final_table["production_date"][i]
-            try:
-                if d < first_date:
-                    first_date = d
-                    index = i
-            except Exception:
-                pass
-        fin = self.final_table["fin"][index]
-        print(str(fin))
-
-    def filter_for_years(self):
-        df = self.final_table
-        df["counter"] = 1
-        # your code here #
 
     def visualize_sales_per_countries(self):
         aufgabe = """
@@ -112,6 +90,95 @@ class Analyser:
         for i in range(len(height_score["name"])):
             print(height_score_date["datum"][i], height_score_date["times"][i])
 
-    def visualize_sales_per_year(self):
-        # your code here #
-        pass
+    def optional(self):
+        aufgabe1 = """
+        Welche Fin hat das
+        Zeitlich erste 
+        verkaufte Fahrzeug.
+        """
+        aufgabe2 = """
+        Wie viele Fahrzeuge wurden
+        zwischen 2017 und 2021
+        mit den in der Aufgabenstellung beschribenden
+        Motoren verkauft.
+        """
+        # Aufgabe 1
+        print("fin des ertverkauften farzeugs")
+        first_date = datetime.datetime(3000, 12, 31, 0, 0)
+        index = 0
+        for i in range(len(self.final_table["production_date"])):
+            d = self.final_table["production_date"][i]
+            try:
+                if d < first_date:
+                    first_date = d
+                    index = i
+            except Exception:
+                pass
+        fin = self.final_table["fin"][index]
+        print(aufgabe1)
+        print(str(fin))
+        # ------------------------
+        # Aufgabe 2
+        motoren = ["OM 934", "OM 936", "OM 470", "OM 471"]
+        key = ["Sales Code", "Code Description En", "Code Description De"]
+        data = pd.DataFrame({
+            "Sales Code": self.engine_table[key[0]],
+            "Code Description En": self.engine_table[key[1]],
+            "Code Description De": self.engine_table[key[2]]
+        })
+        code = []
+        i, k = 0, 0
+        while i < len(motoren):
+            while k < len(data[key[1]]):
+                p1, p2 = data[key[1]][k], data[key[2]][k]
+                p1 = motoren[i] == p1
+                p2 = motoren[i] == p2
+                if p1 or p2:
+                    code.append(data[key[0]][i])
+                k = k + 1
+            k = 0
+            i = i + 1
+        a = 0
+        b = 0
+        c = 0
+        d = 0
+        sca = "sales_code_array"
+        counter = 0
+        index_list = []
+        while a < len(self.final_table[sca]):
+            while b < len(self.final_table[sca][a]):
+                e = self.final_table[sca][a].split(", ")
+                while d < len(e):
+                    while c < len(code):
+                        if e[d] == code[c]:
+                            counter = counter + 1
+                            index_list.append(a)
+                            c = len(code)
+                            d = len(e)
+                            b = len(self.final_table[sca][a])
+                        c = c + 1
+                    c = 0
+                    d = d + 1
+                d = 0
+                b = b + 1
+            b = 0
+            c = 0
+            d = 0
+            a = a + 1
+            print("complete", a)
+        i = 0
+        von = datetime.datetime(2017,  1,  1, 0, 0)
+        bis = datetime.datetime(2021,  1,  1, 0, 0)
+        bisss = counter
+        while i < bisss:
+            try:
+                date = self.final_table["production_date"][index_list[i]]
+                if date > von and date < bis:
+                    pass
+                else:
+                    counter = counter - 1
+            except Exception:
+                counter = counter - 1
+            i = i + 1
+        print(aufgabe2)
+        print(counter)

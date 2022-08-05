@@ -1,6 +1,6 @@
 from import_data_ex import DataLoader
 import pandas as pd
-
+import numpy as np
 
 class ETL:
     final_table = pd.DataFrame()
@@ -20,20 +20,26 @@ class ETL:
         # your code here #
 
     def create_final_table(self):
+        length = self.raw_data_tables["sales_codes"]["h_vehicle_hash"].size
         self.raw_data_tables["sales_codes"] = self.raw_data_tables["sales_codes"].drop(columns=['Unnamed: 0'])
         self.raw_data_tables["vehicle_hash"] = self.raw_data_tables["vehicle_hash"].drop(columns=['Unnamed: 0', 'record_source', 'load_ts'])
         self.raw_data_tables["sales_codes"].sort_values(['h_vehicle_hash'], ascending = [True])
         self.raw_data_tables["vehicle_hash"].sort_values(['h_vehicle_hash'], ascending = [False])
+        vaiz = []
+        i = 0
+        while i < length:
+            vaiz.append(0)
+            i = i + 1
         self.final_table = pd.DataFrame(
             {
                 "h_vehicle_hash": self.raw_data_tables["sales_codes"]["h_vehicle_hash"],
                 "production_date": self.raw_data_tables["sales_codes"]["production_date"],
                 "country": self.raw_data_tables["sales_codes"]["country"],
                 "sales_code_array": self.raw_data_tables["sales_codes"]["sales_code_array"],
-                "fin": self.raw_data_tables["vehicle_hash"]["fin"]
+                "fin": self.raw_data_tables["vehicle_hash"]["fin"],
+                "verkaufte_autos_in_zeitspanne": np.array(vaiz)
             }
         )
-        print(self.final_table)
 
     def enhance_raw_data(self):
         self.handle_nans()

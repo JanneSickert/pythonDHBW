@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import datetime
 
 class Analyser:
     def __init__(self, table, figure_save_path):
@@ -18,9 +18,26 @@ class Analyser:
         # your code here #
 
     def visualize_sales_per_countries(self):
-        von = "01.01.2014"
-        bis = "31.12.2020"
-        
+        # In welchen top 3 Laendern wurden
+        # die meisten Farzeuge in diesen
+        # Zeitraeumen verkauft.
+        von = datetime.datetime(2014,  1,  1, 0, 0)
+        bis = datetime.datetime(2020, 12, 31, 0, 0)
+        key = ["country", "production_date", "verkaufte_autos_in_zeitspanne"]
+        index_list = []
+        for i in self.final_table.index:
+            try:
+                if (self.final_table[key[1]][i] > von) and (self.final_table[key[1]][i] < bis):
+                    index_list.append(i)
+            except Exception:
+                print(
+                    "fail at: ", i, 
+                    "type: ", type(self.final_table[key[1]][i]), 
+                    "value: ", str(self.final_table[key[1]][i]))
+        for index_of_land_in_time_range in index_list:
+            self.final_table[key[2]][index_of_land_in_time_range] = self.final_table[key[2]][index_of_land_in_time_range] + 1
+        print(self.final_table)
+            
 
     def visualize_sales_per_year(self):
         # your code here #

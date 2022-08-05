@@ -110,7 +110,6 @@ class Analyser:
         """
         # ------------------------
         # Aufgabe 1
-        print("fin des ertverkauften farzeugs")
         first_date = datetime.datetime(3000, 12, 31, 0, 0)
         index = 0
         for i in range(len(self.final_table["production_date"])):
@@ -195,7 +194,8 @@ class Analyser:
         exporte_nach_neuseeland = 0
         i = 0
         while i < len(self.final_table["country"]):
-            print(self.final_table["country"][i])
+            if self.final_table["country"][i] == ns:
+                exporte_nach_neuseeland = exporte_nach_neuseeland + 1
             i = i + 1
         print("exporte nach neuseeland", exporte_nach_neuseeland)
         print("-------------------------------", "ende der Analyse")

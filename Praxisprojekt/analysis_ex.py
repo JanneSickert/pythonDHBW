@@ -172,7 +172,6 @@ class Analyser:
             c = 0
             d = 0
             a = a + 1
-            print("complete", a)
         i = 0
         von = datetime.datetime(2017,  1,  1, 0, 0)
         bis = datetime.datetime(2021,  1,  1, 0, 0)
@@ -192,9 +191,10 @@ class Analyser:
         # ------------------------
         # Aufgabe 3
         print(aufgabe3)
-        arr = self.final_table.query("country == \"Neuseeland\"")
+        ns = "Neuseeland"
+        exporte_nach_neuseeland = 0
         i = 0
-        while i < len(arr["sales_code_array"]):
-            if arr["sales_code_array"][i].count("OM 936") >= 1:
-                print(arr["fin"])
+        while i < len(self.final_table["country"]):
+            print(self.final_table["country"][i])
             i = i + 1
+        print("exporte nach neuseeland", exporte_nach_neuseeland)

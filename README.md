@@ -2,6 +2,13 @@
 
 -------------------------
 
+<p align="right"><font color="#02B79C">Max Muckenhirn</font></p>
+<p align="right"><font color="#02B79C">Janne Sickert</font></p>
+<p align="right"><font color="#02B79C">Fabian Bee</font></p>
+<p align="right"><font color="#02B79C">Loan</font></p>
+
+-------------------------
+
 <h1><b>
 <a href="https://github.com/JanneSickert/pythonDHBW/tree/main/Praxisprojekt">
 Praxisprojekt Code</a></b></h1>

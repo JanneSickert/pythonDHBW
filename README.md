@@ -2,10 +2,10 @@
 
 -------------------------
 
-<p align="right"><font color="#02B79C">Max Muckenhirn</font></p>
-<p align="right"><font color="#02B79C">Janne Sickert</font></p>
-<p align="right"><font color="#02B79C">Fabian Bee</font></p>
-<p align="right"><font color="#02B79C">Loan</font></p>
+<p align="right"><font style="color:#02B79C">Max Muckenhirn</font></p>
+<p align="right"><font style="color:#02B79C">Janne Sickert</font></p>
+<p align="right"><font style="color:#02B79C">Fabian Bee</font></p>
+<p align="right"><font style="color:#02B79C">Loan Daniel</font></p>
 
 -------------------------
 

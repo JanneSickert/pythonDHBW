@@ -1,7 +1,11 @@
-import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
-import numpy as np
+
+def pri(new_line = False):
+    if new_line:
+        print("█")
+    else:
+        print("█", end = "")
 
 class Analyser:
     def __init__(self, table, engine_table, figure_save_path):
@@ -9,10 +13,12 @@ class Analyser:
         self.final_table = table
         self.engine_table = engine_table
 
-
     def run(self):
+        print("-------------------------------", "start der Analyse")
         self.visualize_sales_per_countries()
+        print("\n-------------------------------", "Aufgabe 2 (optional)")
         self.optional()
+        print("-------------------------------", "ende der Analyse")
 
     def visualize_sales_per_countries(self):
         aufgabe = """
@@ -88,7 +94,7 @@ class Analyser:
             score_date["times"][ind] = 0
         print(aufgabe2)
         for i in range(len(height_score["name"])):
-            print(height_score_date["datum"][i], height_score_date["times"][i])
+            print(height_score_date["datum"][i], ": ", height_score_date["times"][i])
 
     def optional(self):
         aufgabe1 = """
@@ -108,7 +114,7 @@ class Analyser:
         und das im selben Zeitinterval wie bei
         Aufgabe 2.
         """
-        print("-------------------------------", "start der Analyse")
+        print("\n")
         # ------------------------
         # Aufgabe 1
         first_date = datetime.datetime(3000, 12, 31, 0, 0)
@@ -124,6 +130,7 @@ class Analyser:
         fin = self.final_table["fin"][index]
         print(aufgabe1)
         print(str(fin))
+        print("\n")
         # ------------------------
         # Aufgabe 2
         motoren = ["OM 934", "OM 936", "OM 470", "OM 471"]
@@ -149,10 +156,18 @@ class Analyser:
         b = 0
         c = 0
         d = 0
+        llcc = 0
         sca = "sales_code_array"
         counter = 0
         index_list = []
+        print("Berechne...")
         while a < len(self.final_table[sca]):
+            if llcc == 100:
+                llcc = 0
+                pri(new_line = True)
+            else:
+                pri()
+                llcc = llcc + 1
             while b < len(self.final_table[sca][a]):
                 e = self.final_table[sca][a].split(", ")
                 while d < len(e):
@@ -188,6 +203,7 @@ class Analyser:
             i = i + 1
         print(aufgabe2)
         print(counter)
+        print("\n")
         # ------------------------
         # Aufgabe 3
         print(aufgabe3)
@@ -202,9 +218,10 @@ class Analyser:
                 b3 = self.final_table["production_date"][i] > von and self.final_table["production_date"][i] < bis
                 if b1 and b2 and b3:
                     exporte_nach_neuseeland = exporte_nach_neuseeland + 1
-                    print(self.final_table["fin"][i])
+                    print("fin: ", self.final_table["fin"][i])
             except Exception:
                 pass
             i = i + 1
-        print("exporte nach neuseeland", exporte_nach_neuseeland)
-        print("-------------------------------", "ende der Analyse")
+        print("\n")
+        print("summe exporte nach neuseeland", exporte_nach_neuseeland)
+        print("\n")

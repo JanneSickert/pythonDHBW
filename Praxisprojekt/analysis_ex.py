@@ -1,3 +1,4 @@
+from cmath import nan
 import pandas as pd
 import datetime
 
@@ -65,8 +66,9 @@ class Analyser:
                 ind = score["name"].index(country_name)
                 score["sells"][ind] = score["sells"][ind] + 1
             else:
-                score["name"].append(country_name)
-                score["sells"].append(1)
+                if country_name != nan:
+                    score["name"].append(country_name)
+                    score["sells"].append(1)
         height_score = {
             "name": [], 
             "sells": []
@@ -78,7 +80,7 @@ class Analyser:
         # for i in range(len(score["name"])):
         #    print(score["name"][i], score["sells"][i])
         # Auto Exportweldmeister
-        for i in range(3):
+        for i in range(7):
             ind = score["sells"].index(max(score["sells"]))
             height_score["name"].append(score["name"][ind])
             height_score["sells"].append(score["sells"][ind])
@@ -87,7 +89,7 @@ class Analyser:
         for i in range(len(height_score["name"])):
             print(height_score["name"][i], height_score["sells"][i])
         # Beste Zeiten zum verkaufen
-        for i in range(3):
+        for i in range(7):
             ind = score_date["times"].index(max(score_date["times"]))
             height_score_date["datum"].append(score_date["datum"][ind])
             height_score_date["times"].append(score_date["times"][ind])

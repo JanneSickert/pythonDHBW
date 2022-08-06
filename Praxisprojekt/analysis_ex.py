@@ -108,6 +108,7 @@ class Analyser:
         und das im selben Zeitinterval wie bei
         Aufgabe 2.
         """
+        print("-------------------------------", "start der Analyse")
         # ------------------------
         # Aufgabe 1
         first_date = datetime.datetime(3000, 12, 31, 0, 0)
@@ -191,11 +192,19 @@ class Analyser:
         # Aufgabe 3
         print(aufgabe3)
         ns = "Neuseeland"
+        code = "Z5C" # OM 936
         exporte_nach_neuseeland = 0
         i = 0
         while i < len(self.final_table["country"]):
-            if self.final_table["country"][i] == ns:
-                exporte_nach_neuseeland = exporte_nach_neuseeland + 1
+            try:
+                b1 = self.final_table["country"][i] == ns
+                b2 = (code in (self.final_table["sales_code_array"][i].split(", ")))
+                b3 = self.final_table["production_date"][i] > von and self.final_table["production_date"][i] < bis
+                if b1 and b2 and b3:
+                    exporte_nach_neuseeland = exporte_nach_neuseeland + 1
+                    print(self.final_table["fin"][i])
+            except Exception:
+                pass
             i = i + 1
         print("exporte nach neuseeland", exporte_nach_neuseeland)
         print("-------------------------------", "ende der Analyse")
